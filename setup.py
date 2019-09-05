@@ -46,11 +46,13 @@ class PyTest(TestCommand):
 
 
 setup(
-    name='python-consul',
+    name='habibutsu.python-consul',
     version=metadata['version'],
     author='Andy Gayton',
     author_email='andy@thecablelounge.com',
-    url='https://github.com/cablehead/python-consul',
+    maintainer="Alexander Verbitsky",
+    maintainer_email="habibutsu@gmail.com",
+    url='https://github.com/habibutsu/python-consul',
     license='MIT',
     description=description,
     long_description=open('README.rst').read() + '\n\n' +
