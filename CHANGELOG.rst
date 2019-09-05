@@ -1,6 +1,19 @@
 Change log
 ==========
 
+1.2.0
+-----
+
+Bug Fix
+~~~~~~~
+* Allows aiohttp.client.ClientSession.close() to be awaited (thanks @ashwini-balnaves)
+* Add ACL token on Session and Txn endpoints (thanks @abhisekpadhi and @abarbare)
+
+Features
+~~~~~~~~
+* Graceful leave (thanks @abarbare)
+* New ACL system (thanks @Dudesons)
+
 1.1.0
 -----
 
