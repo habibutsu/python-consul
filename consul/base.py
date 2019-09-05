@@ -668,7 +668,7 @@ class Consul(object):
         def __init__(self, agent):
             self.agent = agent
 
-        def put(self, payload):
+        def put(self, payload, token=None):
             """
             Create a transaction by submitting a list of operations to apply to
             the KV store inside of a transaction. If any operation fails, the
@@ -689,9 +689,19 @@ class Consul(object):
                       "Session": "<session id>"
                     }
                 }
+
+            *token* is an optional `ACL token`_ to apply to this request.
             """
-            return self.agent.http.put(CB.json(), "/v1/txn",
-                                       data=json.dumps(payload))
+            params = []
+            token = token or self.agent.token
+            if token:
+                params.append(('token', token))
+            return self.agent.http.put(
+                    CB.json(),
+                    "/v1/txn",
+                    params=params,
+                    data=json.dumps(payload)
+            )
 
     class Agent(object):
         """
@@ -1760,6 +1770,7 @@ class Consul(object):
             dc = dc or self.agent.dc
             if dc:
                 params.append(('dc', dc))
+            token = token or self.agent.token
             if token:
                 params.append(('token', token))
             data = {}
@@ -1801,6 +1812,7 @@ class Consul(object):
             dc = dc or self.agent.dc
             if dc:
                 params.append(('dc', dc))
+            token = token or self.agent.token
             if token:
                 params.append(('token', token))
             return self.agent.http.put(
@@ -1852,6 +1864,7 @@ class Consul(object):
             dc = dc or self.agent.dc
             if dc:
                 params.append(('dc', dc))
+            token = token or self.agent.token
             if token:
                 params.append(('token', token))
             if index:
@@ -1893,6 +1906,7 @@ class Consul(object):
             dc = dc or self.agent.dc
             if dc:
                 params.append(('dc', dc))
+            token = token or self.agent.token
             if token:
                 params.append(('token', token))
             if index:
@@ -1935,6 +1949,7 @@ class Consul(object):
             dc = dc or self.agent.dc
             if dc:
                 params.append(('dc', dc))
+            token = token or self.agent.token
             if token:
                 params.append(('token', token))
             if index:
@@ -1965,6 +1980,7 @@ class Consul(object):
             dc = dc or self.agent.dc
             if dc:
                 params.append(('dc', dc))
+            token = token or self.agent.token
             if token:
                 params.append(('token', token))
             return self.agent.http.put(
@@ -2478,3 +2494,4 @@ class Consul(object):
             """
             return self.agent.http.get(
                 CB.json(), '/v1/operator/raft/configuration')
+
